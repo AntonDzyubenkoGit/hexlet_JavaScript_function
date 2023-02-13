@@ -1,22 +1,28 @@
 import _ from "lodash";
 
-// Функция sayPrimeOrNot(), которая проверяет переданное число на простоту и печатает на экран yes или no.
+// Функция average(), которая возвращает среднее арифметическое всех переданных аргументов
 
-const isPrime = (num) => {
-  if (num < 2) {
-    return false;
+const average = (...integers) => {
+  if (integers.length === 0) {
+    return null;
   }
 
-  for (let i = 2; i <= num; i++) {
-    if (num % i === 0 && num !== i) {
-      return false;
-    }
+  let result = 0;
+
+  for (let i = 0; i < integers.length; i += 1) {
+    result += integers[i];
   }
-  return true;
+
+  return result / integers.length;
 };
 
-const sayPrimeOrNot = (num) => {
-  console.log(isPrime(num) ? "yes" : "no");
+//  Версия с lodash
+const average2 = (...integers) => {
+  if (integers.length === 0) {
+    return null;
+  }
+
+  return _.sum(integers) / integers.length;
 };
 
-console.log(sayPrimeOrNot(2));
+console.log(average(-3, 4, 2, 10));
