@@ -1,28 +1,21 @@
 import _ from "lodash";
 
-// Функция average(), которая возвращает среднее арифметическое всех переданных аргументов
+// Функция convert(), которая конвертирует даты в массив человеко-читаемых строк на английском языке
 
-const average = (...integers) => {
-  if (integers.length === 0) {
-    return null;
+const convert = (...args) => {
+  const result = [];
+
+  for (let i = 0; i < args.length; i += 1) {
+    const date = new Date(...args[i]).toDateString();
+    result.push(date);
   }
-
-  let result = 0;
-
-  for (let i = 0; i < integers.length; i += 1) {
-    result += integers[i];
-  }
-
-  return result / integers.length;
+  return result;
 };
 
-//  Версия с lodash
-const average2 = (...integers) => {
-  if (integers.length === 0) {
-    return null;
-  }
+const date = [
+  [1993, 3, 24],
+  [1997, 8, 12],
+  [2001, 10, 18],
+];
 
-  return _.sum(integers) / integers.length;
-};
-
-console.log(average(-3, 4, 2, 10));
+console.log(convert(...date));
