@@ -1,0 +1,23 @@
+{
+  "name": "hexlet_javascript_function",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Мои решения задач для курса \"JS: Функции",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonDzyubenkoGit/hexlet_JavaScript_function.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntonDzyubenkoGit/hexlet_JavaScript_function/issues"
+  },
+  "homepage": "https://github.com/AntonDzyubenkoGit/hexlet_JavaScript_function#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
