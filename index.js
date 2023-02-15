@@ -1,47 +1,41 @@
 import _ from "lodash";
 
-// Функция getGirlFriends(), которая принимает на вход список пользователей и возвращает плоский список подруг всех пользователей (без сохранения ключей)
+// Функция groupBy(), которая группирует объекты по заданному свойству
 
-const getGirlFriends = (collection) => {
-  const allOfFriends = collection.flatMap(({ friends }) => friends);
-  const femaleFriends = allOfFriends.filter((allOfFriend) => allOfFriend.gender === "female");
-  return femaleFriends;
+const groupBy = (objects, key) =>
+  objects.reduce((acc, object) => {
+    const groupName = object[key];
+    const group = acc[groupName] ?? [];
+    return { ...acc, [groupName]: group.concat(object) };
+  }, {});
+
+//Вариант с lodash
+
+const groupBy2 = (collection, property) => {
+  const result = _.groupBy(collection, property);
+  return result;
 };
 
-// Вариант с последовательным применением медотов map().filter()
+// Версия №3
 
-const getGirlFriends2 = (collection) => {
-  const femaleFriends = collection.flatMap(({ friends }) => friends).filter((femaleFriend) => femaleFriend.gender === "female");
-  return femaleFriends;
+const groupBy3 = (collection, key) => {
+  const result = collection.reduce((a, b) => {
+    (a[b[key]] = a[b[key]] || []).push(b);
+    return a;
+  }, {});
+  return result;
 };
 
-// Вариант с применением flat()
-
-const getGirlFriends3 = (collection) => {
-  const friendsOfUsers = collection.map(({ friends }) => friends);
-  return friendsOfUsers.flat().filter(({ gender }) => gender === "female");
-};
-
-const users = [
-  {
-    name: "Tirion",
-    friends: [
-      { name: "Mira", gender: "female" },
-      { name: "Ramsey", gender: "male" },
-    ],
-  },
-  { name: "Bronn", friends: [] },
-  {
-    name: "Sam",
-    friends: [
-      { name: "Aria", gender: "female" },
-      { name: "Keit", gender: "female" },
-    ],
-  },
-  {
-    name: "Rob",
-    friends: [{ name: "Taywin", gender: "male" }],
-  },
+const students = [
+  { name: "Tirion", class: "B", mark: 2 },
+  { name: "Keit", class: "A", mark: 3 },
+  { name: "Ramsey", class: "A", mark: 4 },
+  { name: "Bronn", class: "B", mark: 3 },
+  { name: "Sam", class: "A", mark: 2 },
+  { name: "Aria", class: "B", mark: 5 },
+  { name: "Keit", class: "B", mark: 4 },
+  { name: "Rob", class: "B", mark: 4 },
+  { name: "Taywin", class: "A", mark: 5 },
 ];
 
-console.log(getGirlFriends3(users));
+console.log(groupBy3(students, "class"));
