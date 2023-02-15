@@ -26,6 +26,22 @@ const groupBy3 = (collection, key) => {
   return result;
 };
 
+//Версия №4
+const groupBy4 = (arrayObj, property) => {
+  const gB = (acc, obj) => {
+    const value = obj[property];
+
+    if (!Object.hasOwn(acc, value)) {
+      acc[value] = [];
+    }
+
+    acc[value].push({ ...obj });
+
+    return acc;
+  };
+  return arrayObj.reduce(gB, {});
+};
+
 const students = [
   { name: "Tirion", class: "B", mark: 2 },
   { name: "Keit", class: "A", mark: 3 },
@@ -38,4 +54,4 @@ const students = [
   { name: "Taywin", class: "A", mark: 5 },
 ];
 
-console.log(groupBy3(students, "class"));
+console.log(groupBy4(students, "class"));
