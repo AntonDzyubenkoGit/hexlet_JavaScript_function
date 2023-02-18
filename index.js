@@ -1,21 +1,25 @@
-// import _ from "lodash";
+import _ from "lodash";
+import path from "path";
+import * as fs from "node:fs";
 
-// Функция groupBy(), которая группирует объекты по заданному свойству
-const students = [
-  { name: "Tirion", class: "B", mark: 3 },
-  { name: "Keit", class: "A", mark: 3 },
-  { name: "Ramsey", class: "A", mark: 4 },
-];
+// Функция getFreeDomainsCount(), которая принимает на вход список емейлов, а возвращает количество емейлов, расположенных на каждом бесплатном домене. 
 
-const groupBy = (objects, key) =>
-  objects.reduce((acc, object) => {
-    if (!Object.hasOwn(acc, object[key])) {
-      acc[object[key]] = [];
+const emails = ["info@gmail.com", "info@yandex.ru", "info@hotmail.com", "mk@host.com", "support@hexlet.io", "key@yandex.ru", "sergey@gmail.com", "vovan@gmail.com", "vovan@hotmail.com"];
+const freeEmailDomains = ["gmail.com", "yandex.ru", "hotmail.com", "yahoo.com"];
+
+const getFreeDomainsCount = (emails) => {
+  const domains = emails.map((mail) => mail.split("@")[1]);
+
+  const result = freeEmailDomains.reduce((acc, item) => {
+    if (domains.includes(item)) {
+      acc[item] = domains.filter((domain) => domain === item).length;
     }
-
-    acc[object[key]].push(object);
-
     return acc;
   }, {});
 
-console.log(groupBy(students, "mark"));
+  return result;
+};
+
+console.log(getFreeDomainsCount(emails));
+
+
