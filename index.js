@@ -3,27 +3,21 @@
 // import * as fs from "node:fs";
 // import get from "lodash/get.js";
 
-// Испытания. Javascript: Одинаковая четность
+// Испытания. Javascript: Переворот строки
 
-const isEven = (num) => num % 2 === 0;
+const reverse = (str) => {
+  const [...result] = str;
+  return result.reverse().join("");
+};
 
-const sameParityFilter = (collection) => {
-  const firstNumber = collection[0];
+// Вариант с рекурсией
 
-  if (isEven(firstNumber)) {
-    return collection.filter((num) => isEven(num));
+const reverse2 = (str) => {
+  if (str.length === 0) {
+    return str;
   }
 
-  return collection.filter((num) => !isEven(num));
+  return `${str.slice(-1)}${reverse2(str.slice(0, - 1))}`
 };
 
-// Версия №2
-const sameParityFilter2 = (collection) => {
-  const firstNumber = isEven(collection[0]);
-  return collection.filter((num) => isEven(num) === firstNumber);
-};
-
-const coll1 = [-1, 0, 1, -3, 10, -2];
-const coll2 = [2, 0, 1, -3, 10, -2];
-
-console.log(sameParityFilter2(coll1));
+console.log(reverse2("hexlet"));
