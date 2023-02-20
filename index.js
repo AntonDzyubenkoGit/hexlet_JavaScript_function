@@ -3,17 +3,20 @@
 // import * as fs from "node:fs";
 // import get from "lodash/get.js";
 
-// Функция sequenceSum(), которая которая находит сумму последовательности целых чисел.
+// Функция smallestDivisor(), которая находит наименьший делитель заданного числа
 
-const sequenceSum = (begin, end) => {
-  if (end === begin) {
-    return begin;
+const smallestDivisor = (num) => {
+  if (num === 1) {
+    return num;
   }
-  if (end < begin) {
-    return NaN;
-  }
+  const iter = (num, divisor) => {
+    if (num % divisor === 0) {
+      return divisor;
+    }
+    return iter(num, divisor + 1);
+  };
 
-  return end + sequenceSum(begin, end - 1);
+  return iter(num, 2);
 };
 
-console.log(sequenceSum(1, 5));
+console.log(smallestDivisor(15));
