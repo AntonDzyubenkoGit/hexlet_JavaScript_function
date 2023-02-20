@@ -3,43 +3,76 @@ import _ from "lodash";
 // import * as fs from "node:fs";
 // import get from "lodash/get.js";
 
-// Испытания. Javascript: Счётчик одногодок
+// Испытания. Javascript: Фильтр анаграмм
 
-const getMenCountByYear = (coll) => {
-  const years = coll.filter(({ gender }) => gender === "male").map(({ birthday }) => birthday.slice(0, 4));
+const coll1 = ["aabb", "abcd", "bbaa", "dada"];
+const coll2 = ["crazer", "carer", "racar", "caers", "racer"];
+const coll3 = ["lazing", "lazy", "lacer"];
 
-  const result = years.reduce((acc, item) => {
-    acc[item] = years.filter((year) => year === item).length;
+const charsDictionary = (word) => {
+  const [...chars] = word;
+
+  return chars.reduce((acc, item) => {
+    acc[item] = chars.filter((char) => char === item).length;
     return acc;
   }, {});
+};
+
+const is = (object1, object2, keys) => {
+  for (const key of keys) {
+    if (object1[key] !== object2[key]) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const filterAnagrams = (word, arr) => {
+  const result = [];
+
+  for (const item of arr) {
+    const [...keys] = item;
+    if (is(charsDictionary(word), charsDictionary(item), keys)) {
+      result.push(item);
+    }
+  }
 
   return result;
 };
 
 // Вариант с lodash
 
-const getMenCountByYear2 = (coll) => {
-  const mens = coll.filter(({ gender }) => gender === "male");
-  const years = mens.map(({ birthday }) => birthday.split("-")[0]);
-  const result = years.reduce((acc, year) => {
-    const count = _.get(acc, year, 0) + 1;
-    return { ...acc, [year]: count };
+const filterAnagrams2 = (word, arr) => {
+  const [...chars] = word;
+
+  const charsDictionary = chars.reduce((acc, item) => {
+    acc[item] = chars.filter((char) => char === item).length;
+    return acc;
   }, {});
+
+  const result = [];
+
+  for (const item of arr) {
+    const [...chars] = item;
+    const itemDictionary = chars.reduce((acc, item) => {
+      acc[item] = chars.filter((char) => char === item).length;
+      return acc;
+    }, {});
+    if (_.isEqual(charsDictionary, itemDictionary)) {
+      result.push(item);
+    }
+  }
 
   return result;
 };
 
-const users = [
-  { name: "Bronn", gender: "male", birthday: "1973-03-23" },
-  { name: "Reigar", gender: "male", birthday: "1973-11-03" },
-  { name: "Eiegon", gender: "male", birthday: "1963-11-03" },
-  { name: "Sansa", gender: "female", birthday: "2012-11-03" },
-  { name: "Jon", gender: "male", birthday: "1980-11-03" },
-  { name: "Robb", gender: "male", birthday: "1980-05-14" },
-  { name: "Tisha", gender: "female", birthday: "2012-11-03" },
-  { name: "Rick", gender: "male", birthday: "2012-11-03" },
-  { name: "Joffrey", gender: "male", birthday: "1999-11-03" },
-  { name: "Edd", gender: "male", birthday: "1973-11-03" },
-];
+// Вариант через filter()
 
-console.log(getMenCountByYear2(users));
+const filterAnagrams3 = (word, words) => {
+  const normalize = (str) => str.split("").sort().join("");
+  const normal = normalize(word);
+
+  return words.filter((item) => normalize(item) === normal);
+};
+
+console.log(filterAnagrams3("racer", coll2));
